@@ -50,10 +50,10 @@ int main(){
     string function;
     getline(cin, function);
 
-    function = evaluations::remplazar(function, ' ');
+    function = evaluations::replace(function, ' ');
 
     cout << num_var(function) << endl;
     cout << dec_binario(10) << endl;
     //cout << infix_postfix(function) << endl;
-    cout << evaluations::evaluar(function) << endl;
+    cout << evaluations::evaluate(function) << endl;
 }
