@@ -29,7 +29,7 @@ namespace {
         std::string operationStack = "";
 
         std::map<char, int> preference = {
-            {' ', 0},
+            {' ', 0}, {'(', 0},
             {'+', 2}, {'-', 2},
             {'*', 3}, {'x', 3}, {'/', 3},
         };
