@@ -58,12 +58,12 @@ namespace {
 
         postfix += operationStack;
         
-        return evaluations::remplazar(postfix, ' ');
+        return evaluations::replace(postfix, ' ');
     }
 }
 
 namespace evaluations{
-    std::string remplazar(std::string texto, char remplazar, char remplazo){
+    std::string replace(std::string texto, char remplazar, char remplazo){
         for (char& letra : texto){
             if (letra == remplazar){
                 letra = remplazo;
@@ -72,13 +72,8 @@ namespace evaluations{
         return texto;
     }
 
-    int evaluar(std::string function){ 
-        std::vector<char> letras = {'A', 'B', 'C', 'D', 'E', 'F', 'G',
-                            'H', 'I', 'J', 'K', 'L', 'M', 'N',
-                            'O', 'P', 'Q', 'R', 'S', 'T', 'U',
-                            'V', 'W', 'X', 'Y', 'Z'};
+    int evaluate(std::string function){ 
         std::string postfixFunction = infix_postfix(function);
-        std::cout << postfixFunction << std::endl;
         std::vector<char> stack;
         
         for (char simbol : postfixFunction){
@@ -94,7 +89,6 @@ namespace evaluations{
                 stack.push_back(simpleCalculator(b, a, simbol) + '0');
             }
         }
-
         return stack[0] - '0';
     }
 }
