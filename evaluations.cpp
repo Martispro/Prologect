@@ -3,6 +3,8 @@
 #include <vector>
 #include "evaluations.hpp"
 
+const std::string operations = "+-*x/()";
+
 /*
  * Creating an anonimun namespace for private functions of this file
 */
@@ -24,8 +26,7 @@ namespace {
     //transfor infix expresions to postfix notation for easyer evaluation using Shunting yard algorithm
     std::string infix_postfix(std::string infix){
         std::string postfix;
-        std::string operationStack = " ";
-        std::string operations = "+-*x/()";
+        std::string operationStack = "";
 
         std::map<char, int> preference = {
             {' ', 0},
@@ -38,27 +39,24 @@ namespace {
                 postfix += character;
             }
             else{
-                if (character == ')'){
-                    for (int i = operationStack.length()-1; i > operationStack.find('('); i--){
-                        postfix += operationStack[i];
+                if (!operationStack.empty()){
+                    if (character == ')'){
+                        postfix += operationStack.substr(0, operationStack.find('('));
+                        operationStack = operationStack.substr(operationStack.find('(')+1);
+                        continue;
+                    }else if (character == '('){
+                        operationStack = character + operationStack;
+                        continue;
+                    }else if (preference[character] <= preference[operationStack[0]]){
+                        postfix += operationStack[0];
+                        operationStack = operationStack.substr(1);
                     }
-                    //postfix += operationStack.substr(operationStack.find('(')+1, operationStack.length() - operationStack.find('('));
-                    operationStack = operationStack.substr(0, operationStack.find('('));
-                    continue;
-                }else if (character == '('){
-                    operationStack += character;
-                    continue;
-                }else if (preference[character] <= preference[operationStack[operationStack.length()-1]]){
-                    postfix += operationStack[operationStack.length()-1];
-                    operationStack.pop_back();
                 }
-                operationStack += character;
+                operationStack = character + operationStack;
             }
         }
 
-        for (int i = operationStack.length()-1; i > 0; i--){
-            postfix += operationStack[i];
-        }
+        postfix += operationStack;
         
         return evaluations::remplazar(postfix, ' ');
     }
@@ -82,10 +80,9 @@ namespace evaluations{
         std::string postfixFunction = infix_postfix(function);
         std::cout << postfixFunction << std::endl;
         std::vector<char> stack;
-        std::string operadores = "+-*/%|&^";
         
         for (char simbol : postfixFunction){
-            if (operadores.find(simbol) == std::string::npos){
+            if (operations.find(simbol) == std::string::npos){
                 stack.push_back(simbol);
             }else{
                 int a = stack.back() - '0';
