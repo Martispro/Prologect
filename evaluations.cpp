@@ -15,7 +15,6 @@ namespace {
             case '-': return a - b;
             case '*': return a * b;
             case '/': return a / b;
-            case '%': return a % b;
             case '|': return a | b;
             case '&': return a & b;
             case '^': return a ^ b;
@@ -30,8 +29,8 @@ namespace {
 
         std::map<char, int> preference = {
             {' ', 0}, {'(', 0},
-            {'+', 2}, {'-', 2},
-            {'*', 3}, {'x', 3}, {'/', 3},
+            {'+', 2}, {'|', 2}, {'-', 2},
+            {'*', 3}, {'x', 3}, {'&', 3}, {'^', 3}, {'/', 3},
         };
 
         for (char character : infix){

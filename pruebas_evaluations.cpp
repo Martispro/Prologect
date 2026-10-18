@@ -8,5 +8,5 @@ main(){
     string function;
     getline(cin, function);
 
-    cout << evaluations::evaluar(function) << endl;
+    cout << evaluations::evaluate(function) << endl;
 }
