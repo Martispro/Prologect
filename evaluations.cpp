@@ -62,6 +62,38 @@ namespace {
 }
 
 namespace evaluations{
+    std::string normalise(std::string function, char operation){
+        std::string ascii_letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        std::string normaliced_function = "";
+        bool is_variable = false;
+        bool close_blacket = false;
+
+        for (char letter : function){
+            if (ascii_letters.find(letter) != std::string::npos && !is_variable){
+                is_variable = true;
+            }else if (ascii_letters.find(letter) != std::string::npos && is_variable){
+                normaliced_function += operation;
+            }else if ((letter == '!' || letter == '(') && is_variable){
+                normaliced_function += operation;
+                is_variable = false;
+            }else{
+                is_variable = false;
+            }
+
+            if (letter == ')' && !close_blacket){
+                close_blacket = true;
+            }else if (close_blacket && (is_variable || letter == '(' || letter == '!')){
+                normaliced_function += operation;
+                close_blacket = false;
+            }else{
+                close_blacket = false;
+            }
+
+            normaliced_function += letter;
+        }
+        return normaliced_function;
+    }
+
     std::string replace(std::string texto, char remplazar, char remplazo){
         for (char& letra : texto){
             if (letra == remplazar){
