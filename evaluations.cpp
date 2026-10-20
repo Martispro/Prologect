@@ -31,6 +31,7 @@ namespace {
             {' ', 0}, {'(', 0},
             {'+', 2}, {'|', 2}, {'-', 2},
             {'*', 3}, {'x', 3}, {'&', 3}, {'^', 3}, {'/', 3},
+            {'!', 4},
         };
 
         for (char character : infix){
@@ -47,8 +48,10 @@ namespace {
                         operationStack = character + operationStack;
                         continue;
                     }else if (preference[character] <= preference[operationStack[0]]){
-                        postfix += operationStack[0];
-                        operationStack = operationStack.substr(1);
+                        while (preference[character] < preference[operationStack[0]]){
+                            postfix += operationStack[0];
+                            operationStack = operationStack.substr(1);
+                        }
                     }
                 }
                 operationStack = character + operationStack;
