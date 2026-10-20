@@ -106,6 +106,17 @@ namespace evaluations{
         return texto;
     }
 
+    int dec_binario(int num){
+        int num_binario = 0;
+        int posicion = 1;
+        while (num > 0){
+            num_binario += (num % 2) * posicion;
+            num /= 2;
+            posicion *= 10;
+        }
+        return num_binario;
+    }
+
     int evaluate(std::string function){ 
         std::string postfixFunction = infix_postfix(function);
         std::vector<char> stack;
