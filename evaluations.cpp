@@ -48,7 +48,7 @@ namespace {
                         operationStack = character + operationStack;
                         continue;
                     }else if (preference[character] <= preference[operationStack[0]]){
-                        while (preference[character] < preference[operationStack[0]]){
+                        while (!operationStack.empty() && preference[character] < preference[operationStack[0]]){
                             postfix += operationStack[0];
                             operationStack = operationStack.substr(1);
                         }
